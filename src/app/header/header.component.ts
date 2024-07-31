@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
-import { Router, RouterModule } from "@angular/router";
-import { Init } from "v8";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { NavigationEnd, Router, RouterModule } from "@angular/router";
+import { filter } from "rxjs";
 
 @Component({
   selector: "app-header",
@@ -11,15 +11,32 @@ import { Init } from "v8";
   imports: [CommonModule, RouterModule],
 })
 export class HeaderComponent implements OnInit {
-  constructor(private router: Router) {}
-  ngOnInit(): void {
-    alert("Test");
+  username: string | null = null;
+  isLoggedIn: boolean = false;
+
+  constructor(private router: Router, private cdr: ChangeDetectorRef) {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.checkLoginStatus();
+      });
   }
 
-  redirectToLogin() {
-    // const url =
-    //   'https://n01649102-authentication.auth.us-east-1.amazoncognito.com/login?client_id=24gpd336tlp3a2htsdvbgupd94&response_type=code&scope=email+openid&redirect_uri=https%3A%2F%2F127.0.0.1%3A8080%2Flogged_in.html';
-    // window.location.href = url;
-    alert();
+  ngOnInit(): void {
+    this.checkLoginStatus();
+  }
+
+  checkLoginStatus() {
+    const token = localStorage.getItem("authToken");
+    this.isLoggedIn = !!token;
+    this.username = localStorage.getItem("username");
+  }
+
+  logout(): void {
+    localStorage.clear();
+    this.cdr.detectChanges();
+    this.isLoggedIn = false;
+    this.username = null;
+    this.router.navigate(["/login"]);
   }
 }
