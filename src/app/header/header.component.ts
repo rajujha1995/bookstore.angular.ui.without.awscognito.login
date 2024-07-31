@@ -1,16 +1,20 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { CommonModule } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import { Router, RouterModule } from "@angular/router";
+import { Init } from "v8";
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.css',
+  selector: "app-header",
+  templateUrl: "./header.component.html",
+  styleUrl: "./header.component.css",
   standalone: true,
   imports: [CommonModule, RouterModule],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   constructor(private router: Router) {}
+  ngOnInit(): void {
+    alert("Test");
+  }
 
   redirectToLogin() {
     // const url =
