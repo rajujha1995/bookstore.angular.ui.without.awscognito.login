@@ -13,6 +13,7 @@ import { filter } from "rxjs";
 export class HeaderComponent implements OnInit {
   username: string | null = null;
   isLoggedIn: boolean = false;
+  isAdmin: boolean = false;
 
   constructor(private router: Router, private cdr: ChangeDetectorRef) {
     this.router.events
@@ -30,12 +31,15 @@ export class HeaderComponent implements OnInit {
     const token = localStorage.getItem("authToken");
     this.isLoggedIn = !!token;
     this.username = localStorage.getItem("username");
+
+    this.isAdmin = this.username === "admin@bookstore.com";
   }
 
   logout(): void {
     localStorage.clear();
     this.cdr.detectChanges();
     this.isLoggedIn = false;
+    this.isAdmin = false;
     this.username = null;
     this.router.navigate(["/login"]);
   }

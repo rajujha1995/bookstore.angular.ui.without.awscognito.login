@@ -1,36 +1,36 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject } from "@angular/core";
 import {
   FormControl,
   FormGroup,
   Validators,
   ReactiveFormsModule,
-} from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-import { Observable, tap } from 'rxjs';
-import { Book } from '../../_models/book.model';
+} from "@angular/forms";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { CommonModule } from "@angular/common";
+import { RouterOutlet } from "@angular/router";
+import { Observable, tap } from "rxjs";
+import { Book } from "../../_models/book.model";
 
 @Component({
-  selector: 'app-adminhome',
+  selector: "app-adminhome",
   standalone: true,
   imports: [RouterOutlet, HttpClientModule, ReactiveFormsModule, CommonModule],
-  templateUrl: './adminhome.component.html',
-  styleUrls: ['./adminhome.component.css'],
+  templateUrl: "./adminhome.component.html",
+  styleUrls: ["./adminhome.component.css"],
 })
 export class AdminhomeComponent {
   readonly apiUrl: string =
-    'https://82b8crgwq6.execute-api.us-east-1.amazonaws.com/prod/api/books';
+    "https://82b8crgwq6.execute-api.us-east-1.amazonaws.com/prod/api/books";
   http = inject(HttpClient);
   books$ = this.getBooks();
 
   booksForm = new FormGroup({
-    id: new FormControl('', [Validators.required]),
-    name: new FormControl('', [Validators.required]),
-    author: new FormControl('', [Validators.required]),
-    description: new FormControl('', [Validators.required]),
-    price: new FormControl('', [Validators.required]),
-    imageurl: new FormControl('', [Validators.required]),
+    id: new FormControl("", [Validators.required]),
+    name: new FormControl("", [Validators.required]),
+    author: new FormControl("", [Validators.required]),
+    description: new FormControl("", [Validators.required]),
+    price: new FormControl("", [Validators.required]),
+    imageurl: new FormControl("", [Validators.required]),
   });
 
   private getBooks(): Observable<Book[]> {
@@ -51,7 +51,7 @@ export class AdminhomeComponent {
           this.booksForm.reset();
         },
         error: (error) => {
-          console.error('There was an error!', error);
+          console.error("There was an error!", error);
         },
       });
     } else {
@@ -67,7 +67,7 @@ export class AdminhomeComponent {
         this.booksForm.reset();
       },
       error: (error) => {
-        console.error('There was an error!', error);
+        console.error("There was an error!", error);
       },
     });
   }
@@ -79,7 +79,7 @@ export class AdminhomeComponent {
         this.booksForm.reset();
       },
       error: (error) => {
-        console.error('There was an error!', error);
+        console.error("There was an error!", error);
       },
     });
   }

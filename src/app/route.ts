@@ -1,35 +1,37 @@
-import { Routes } from '@angular/router';
+import { Routes } from "@angular/router";
+import { AuthGuard } from "../auth/auth.guard";
 
 export const routes: Routes = [
   {
-    path: 'home',
+    path: "home",
     loadComponent: () =>
-      import('./home/home.component').then((m) => m.HomeComponent),
+      import("./home/home.component").then((m) => m.HomeComponent),
   },
   {
-    path: 'about',
+    path: "about",
     loadComponent: () =>
-      import('./about/about.component').then((m) => m.AboutComponent),
+      import("./about/about.component").then((m) => m.AboutComponent),
   },
   {
-    path: 'blog',
+    path: "blog",
     loadComponent: () =>
-      import('./blog/blog.component').then((m) => m.BlogComponent),
+      import("./blog/blog.component").then((m) => m.BlogComponent),
   },
   {
-    path: 'contact',
+    path: "contact",
     loadComponent: () =>
-      import('./contact/contact.component').then((m) => m.ContactComponent),
+      import("./contact/contact.component").then((m) => m.ContactComponent),
   },
   {
-    path: 'login',
+    path: "login",
     loadComponent: () =>
-      import('./login/login.component').then((m) => m.LoginComponent),
+      import("./login/login.component").then((m) => m.LoginComponent),
   },
   {
-    path: 'adminhome',
+    path: "adminhome",
     loadComponent: () =>
-      import('./admin/adminhome.component').then((m) => m.AdminhomeComponent),
+      import("./admin/adminhome.component").then((m) => m.AdminhomeComponent),
+    canActivate: [AuthGuard],
   },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: "", redirectTo: "/home", pathMatch: "full" },
 ];

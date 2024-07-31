@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
-import { Component, inject, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import {
   FormBuilder,
   FormGroup,
@@ -65,6 +65,7 @@ export class LoginComponent {
           this.registerForm.reset();
           this.notificationMessage = "Registration successful!";
           this.notificationClass = "alert-success";
+          this.router.navigate(["/login"]);
         },
         error: (error) => {
           if (error.error.message === "User already exists") {
