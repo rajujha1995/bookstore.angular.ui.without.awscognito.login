@@ -1,0 +1,102 @@
+/* Button Styles */
+.btn-success {
+  background-color: #28a745; /* Green */
+  border-color: #28a745;
+}
+
+.btn-danger {
+  background-color: #dc3545; /* Red */
+  border-color: #dc3545;
+}
+
+.btn {
+  border: none;
+  color: #fff;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+.rounded-0 {
+  border-radius: 0;
+}
+
+/* Form Validation Styles */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.input-error {
+  border: 2px solid red;
+  background-color: #ffe6e6; /* Light red background */
+}
+
+.error-message {
+  color: red;
+  font-size: 0.875rem; /* Smaller font size */
+  margin-top: 0.25rem; /* Space between input and error message */
+}
+
+/* CSS for spacing between tabs */
+.nav-pills .nav-item {
+  margin-right: 10px; /* Add spacing between buttons */
+}
+
+.nav-pills .nav-link {
+  border-radius: 0;
+}
+
+.tab-content {
+  margin-top: 20px; /* Space between tab headers and content */
+}
+
+.tab-pane {
+  padding: 20px; /* Add padding to tab content */
+  border: 1px solid #ddd; /* Border for better visibility */
+  border-radius: 5px; /* Rounded corners */
+}
+
+.form-control {
+  margin-bottom: 1rem;
+}
+.notification {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+}
+
+.notification.alert-success {
+  background-color: rgba(76, 175, 80, 0.8); /* Light green */
+}
+
+.notification.alert-danger {
+  background-color: rgba(244, 67, 54, 0.8); /* Light red */
+}
+
+.notification.show {
+  opacity: 1;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-left: 15px; /* Space between message and close button */
+  padding: 0;
+}

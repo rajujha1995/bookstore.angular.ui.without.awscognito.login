@@ -7,10 +7,10 @@
           <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
               <button
-                class="nav-link active"
+                class="nav-link"
+                [class.active]="currentTab === 'login'"
+                (click)="handleTabChange('login')"
                 id="pills-home-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-home"
                 type="button"
                 role="tab"
                 aria-controls="pills-home"
@@ -19,13 +19,12 @@
                 Login
               </button>
             </li>
-            &nbsp;
             <li class="nav-item" role="presentation">
               <button
                 class="nav-link"
+                [class.active]="currentTab === 'register'"
+                (click)="handleTabChange('register')"
                 id="pills-profile-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-profile"
                 type="button"
                 role="tab"
                 aria-controls="pills-profile"
@@ -37,22 +36,59 @@
           </ul>
         </div>
 
+        <!-- Notification Section -->
+        <div
+          *ngIf="notificationMessage"
+          class="alert"
+          [ngClass]="notificationClass"
+        >
+          {{ notificationMessage }}
+          <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            (click)="notificationMessage = ''"
+          ></button>
+        </div>
+
         <div class="tab-content" id="pills-tabContent">
+          <!-- Login Form -->
           <div
-            class="tab-pane fade show active"
+            class="tab-pane fade"
+            [class.show]="currentTab === 'login'"
+            [class.active]="currentTab === 'login'"
             id="pills-home"
             role="tabpanel"
             aria-labelledby="pills-home-tab"
           >
-            <form>
+            <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
               <div class="mb-3">
                 <label for="loginEmail" class="form-label">Email address</label>
                 <input
                   type="email"
                   class="form-control"
                   id="loginEmail"
-                  aria-describedby="emailHelp"
+                  formControlName="email"
+                  [ngClass]="{
+                    'input-error':
+                      loginForm.get('email')?.invalid &&
+                      loginForm.get('email')?.touched
+                  }"
                 />
+                <div
+                  *ngIf="
+                    loginForm.get('email')?.invalid &&
+                    loginForm.get('email')?.touched
+                  "
+                  class="error-message"
+                >
+                  <small *ngIf="loginForm.get('email')?.errors?.['required']">
+                    Email is required.
+                  </small>
+                  <small *ngIf="loginForm.get('email')?.errors?.['email']">
+                    Invalid email format.
+                  </small>
+                </div>
               </div>
               <div class="mb-3">
                 <label for="loginPassword" class="form-label">Password</label>
@@ -60,21 +96,70 @@
                   type="password"
                   class="form-control"
                   id="loginPassword"
+                  formControlName="password"
+                  [ngClass]="{
+                    'input-error':
+                      loginForm.get('password')?.invalid &&
+                      loginForm.get('password')?.touched
+                  }"
                 />
+                <div
+                  *ngIf="
+                    loginForm.get('password')?.invalid &&
+                    loginForm.get('password')?.touched
+                  "
+                  class="error-message"
+                >
+                  <small
+                    *ngIf="loginForm.get('password')?.errors?.['required']"
+                  >
+                    Password is required.
+                  </small>
+                  <small
+                    *ngIf="loginForm.get('password')?.errors?.['minlength']"
+                  >
+                    Password must be at least 6 characters long.
+                  </small>
+                </div>
               </div>
               <button type="submit" class="btn btn-primary">Login</button>
             </form>
           </div>
+
+          <!-- Register Form -->
           <div
             class="tab-pane fade"
+            [class.show]="currentTab === 'register'"
+            [class.active]="currentTab === 'register'"
             id="pills-profile"
             role="tabpanel"
             aria-labelledby="pills-profile-tab"
           >
-            <form>
+            <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
               <div class="mb-3">
                 <label for="registerName" class="form-label">Name</label>
-                <input type="text" class="form-control" id="registerName" />
+                <input
+                  type="text"
+                  class="form-control"
+                  id="registerName"
+                  formControlName="name"
+                  [ngClass]="{
+                    'input-error':
+                      registerForm.get('name')?.invalid &&
+                      registerForm.get('name')?.touched
+                  }"
+                />
+                <div
+                  *ngIf="
+                    registerForm.get('name')?.invalid &&
+                    registerForm.get('name')?.touched
+                  "
+                  class="error-message"
+                >
+                  <small *ngIf="registerForm.get('name')?.errors?.['required']">
+                    Name is required.
+                  </small>
+                </div>
               </div>
               <div class="mb-3">
                 <label for="registerEmail" class="form-label"
@@ -84,8 +169,29 @@
                   type="email"
                   class="form-control"
                   id="registerEmail"
-                  aria-describedby="emailHelp"
+                  formControlName="email"
+                  [ngClass]="{
+                    'input-error':
+                      registerForm.get('email')?.invalid &&
+                      registerForm.get('email')?.touched
+                  }"
                 />
+                <div
+                  *ngIf="
+                    registerForm.get('email')?.invalid &&
+                    registerForm.get('email')?.touched
+                  "
+                  class="error-message"
+                >
+                  <small
+                    *ngIf="registerForm.get('email')?.errors?.['required']"
+                  >
+                    Email is required.
+                  </small>
+                  <small *ngIf="registerForm.get('email')?.errors?.['email']">
+                    Invalid email format.
+                  </small>
+                </div>
               </div>
               <div class="mb-3">
                 <label for="registerPassword" class="form-label"
@@ -95,7 +201,31 @@
                   type="password"
                   class="form-control"
                   id="registerPassword"
+                  formControlName="password"
+                  [ngClass]="{
+                    'input-error':
+                      registerForm.get('password')?.invalid &&
+                      registerForm.get('password')?.touched
+                  }"
                 />
+                <div
+                  *ngIf="
+                    registerForm.get('password')?.invalid &&
+                    registerForm.get('password')?.touched
+                  "
+                  class="error-message"
+                >
+                  <small
+                    *ngIf="registerForm.get('password')?.errors?.['required']"
+                  >
+                    Password is required.
+                  </small>
+                  <small
+                    *ngIf="registerForm.get('password')?.errors?.['minlength']"
+                  >
+                    Password must be at least 6 characters long.
+                  </small>
+                </div>
               </div>
               <div class="mb-3">
                 <label for="confirmPassword" class="form-label"
@@ -105,7 +235,25 @@
                   type="password"
                   class="form-control"
                   id="confirmPassword"
+                  formControlName="confirmPassword"
+                  [ngClass]="{
+                    'input-error': registerForm.get('confirmPassword')?.invalid &&
+                      registerForm.get('confirmPassword')?.touched || registerForm.errors?.['mismatch']
+                  }"
                 />
+                <div
+                  *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched || registerForm.errors?.['mismatch']"
+                  class="error-message"
+                >
+                  <small
+                    *ngIf="registerForm.get('confirmPassword')?.errors?.['required']"
+                  >
+                    Confirm Password is required.
+                  </small>
+                  <small *ngIf="registerForm.errors?.['mismatch']">
+                    Passwords do not match.
+                  </small>
+                </div>
               </div>
               <button type="submit" class="btn btn-primary">Register</button>
             </form>
